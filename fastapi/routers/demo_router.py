@@ -4,6 +4,7 @@
 The demo router is a router that demonstrates how to use the fastapi
 integration with odoo.
 """
+
 from typing import Annotated
 
 from psycopg2 import errorcodes
@@ -66,7 +67,7 @@ async def get_lang(env: Annotated[Environment, Depends(odoo_env)]):
 
 @router.get("/demo/who_ami")
 async def who_ami(
-    partner: Annotated[Partner, Depends(authenticated_partner)]
+    partner: Annotated[Partner, Depends(authenticated_partner)],
 ) -> DemoUserInfo:
     """Who am I?
 

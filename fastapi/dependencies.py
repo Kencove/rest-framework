@@ -50,7 +50,7 @@ def optionally_authenticated_partner_impl() -> Partner | None:
 
 
 def authenticated_partner_env(
-    partner: Annotated[Partner, Depends(authenticated_partner_impl)]
+    partner: Annotated[Partner, Depends(authenticated_partner_impl)],
 ) -> Environment:
     """Return an environment with the authenticated partner id in the context"""
     return partner.with_context(authenticated_partner_id=partner.id).env
