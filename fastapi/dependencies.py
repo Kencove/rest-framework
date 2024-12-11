@@ -114,14 +114,20 @@ def basic_auth_user(
     username = credential.username
     password = credential.password
     try:
-        uid = (
+        response = (
             env["res.users"]
             .sudo()
             .authenticate(
-                db=env.cr.dbname, login=username, password=password, user_agent_env=None
+                db=env.cr.dbname,
+                credential={
+                    "type": "password",
+                    "login": username,
+                    "password": password,
+                },
+                user_agent_env=None,
             )
         )
-        return env["res.users"].browse(uid)
+        return env["res.users"].browse(response.get("uid"))
     except AccessDenied as ad:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
