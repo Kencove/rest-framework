@@ -122,6 +122,13 @@ Authors
 
 * ACSONE SA/NV
 
+Contributors
+------------
+
+Antony Herrera <antonyht27@gmail.com>
+
+Mohamed Alkobrosli <malkobrosly@kencove.com>
+
 Maintainers
 -----------
 
