@@ -125,7 +125,7 @@ def auth_jwt_http_header_authorization(
         HTTPAuthorizationCredentials | None,
         Depends(HTTPBearer(auto_error=False)),
     ],
-) -> str | None:
+):
     if credentials is None:
         return None
     return credentials.credentials
