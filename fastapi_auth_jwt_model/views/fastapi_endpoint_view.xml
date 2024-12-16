@@ -12,11 +12,11 @@
                     <group
                     name="jwt_model_app_configuration"
                     title="Configuration"
-                    attrs="{'invisible': [('app', '!=', 'fastapi_auth_jwt_model')]}"
+                    invisible="app != 'fastapi_auth_jwt_model'"
                 >
                         <field
                         name="auth_jwt_validator_id"
-                        attrs="{'required': [('app', '=', 'fastapi_auth_jwt_model')]}"
+                        required="app == 'fastapi_auth_jwt_model'"
                     />
                     </group>
                 </span>

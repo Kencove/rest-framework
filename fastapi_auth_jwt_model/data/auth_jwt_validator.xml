@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    
+    <!-- If updated or a new record created make sure to update the target validator name in /routers -->
+    
     <record id="model_validator" model="auth.jwt.validator">
         <field name="name">model</field>
         <field name="audience">auth_jwt_test_api</field>

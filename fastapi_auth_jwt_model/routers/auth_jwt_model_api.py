@@ -19,7 +19,7 @@ router = APIRouter()
 def whoami(
     partner: Annotated[
         Partner,
-        Depends(AuthJwtPartner(validator_name="demo")),
+        Depends(AuthJwtPartner(validator_name="model")),
     ],
 ) -> TestData:
     return TestData(
@@ -33,7 +33,7 @@ def whoami(
 def whoami_public_or_jwt(
     partner: Annotated[
         Partner,
-        Depends(AuthJwtPartner(validator_name="demo", allow_unauthenticated=True)),
+        Depends(AuthJwtPartner(validator_name="model", allow_unauthenticated=True)),
     ],
 ):
     if partner:
@@ -49,7 +49,7 @@ def whoami_public_or_jwt(
 def whoami_cookie(
     partner: Annotated[
         Partner,
-        Depends(AuthJwtPartner(validator_name="demo_cookie")),
+        Depends(AuthJwtPartner(validator_name="model_cookie")),
     ],
 ):
     return TestData(
@@ -64,7 +64,7 @@ def whoami_cookie_public_or_jwt(
     partner: Annotated[
         Partner,
         Depends(
-            AuthJwtPartner(validator_name="demo_cookie", allow_unauthenticated=True)
+            AuthJwtPartner(validator_name="model_cookie", allow_unauthenticated=True)
         ),
     ],
 ):
@@ -80,7 +80,7 @@ def whoami_cookie_public_or_jwt(
 @router.get("/keycloak/whoami", response_model=TestData)
 def whoami_keycloak(
     partner: Annotated[
-        Partner, Depends(AuthJwtPartner(validator_name="demo_keycloak"))
+        Partner, Depends(AuthJwtPartner(validator_name="model_keycloak"))
     ],
 ):
     return TestData(
@@ -95,7 +95,7 @@ def whoami_keycloak_public_or_jwt(
     partner: Annotated[
         Partner,
         Depends(
-            AuthJwtPartner(validator_name="demo_keycloak", allow_unauthenticated=True)
+            AuthJwtPartner(validator_name="model_keycloak", allow_unauthenticated=True)
         ),
     ],
 ):

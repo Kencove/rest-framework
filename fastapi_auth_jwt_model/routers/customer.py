@@ -3,13 +3,12 @@
 
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
-
 from odoo import api, fields, models
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
+from odoo.addons.fastapi_auth_jwt.dependencies import AuthJwtOdooEnv, AuthJwtPartner
 
-from odoo.addons.fastapi_auth_jwt.dependencies import AuthJwtPartner, AuthJwtOdooEnv
+from fastapi import APIRouter, Depends
 
 from ..schemas.customer import Customer, CustomerUpdate
 
@@ -19,13 +18,12 @@ customer_router = APIRouter(tags=["customer"])
 
 @customer_router.get("/customer")
 def get_customer_data(
-    partner: Annotated[ResPartner, Depends(AuthJwtPartner(validator_name="demo"))],
+    partner: Annotated[ResPartner, Depends(AuthJwtPartner(validator_name="model"))],
 ) -> Customer:
     """
     Get customer personal data of authenticated user
     """
     return Customer.from_res_partner(partner)
-    
 
 
 @customer_router.post(
@@ -34,14 +32,15 @@ def get_customer_data(
 def update_customer_data(
     data: CustomerUpdate,
     env: Annotated[api.Environment, Depends(AuthJwtOdooEnv)],
-    partner: Annotated[ResPartner, Depends(AuthJwtPartner(validator_name="demo"))],
+    partner: Annotated[ResPartner, Depends(AuthJwtPartner(validator_name="model"))],
 ) -> Customer:
     """
     update customer personal data of authenticated user
     """
     CustomerUpdate.to_res_partner_vals(data)
     env = partner.with_context(authenticated_partner_id=partner.id).env
-    helper = env["shopinvader_api_customer.router.helper"].new({"partner": partner})
+    helper = env["shopinvader_api_customer.router.helper"].new()
+    helper.partner= partner.id
     updated_partner = helper._update_shopinvader_customer(data)
     return Customer.from_res_partner(updated_partner)
 
@@ -50,9 +49,7 @@ class ShopInvaderApiCustomerHelper(models.AbstractModel):
     _name = "shopinvader_api_customer.router.helper"
     _description = "API Customer Router Helper"
 
-    partner = fields.Many2one(
-        comodel_name="res.partner",
-    )
+    partner = fields.Many2one("res.partner")
 
     def _update_shopinvader_customer(self, data: CustomerUpdate) -> ResPartner:
         self.ensure_one()

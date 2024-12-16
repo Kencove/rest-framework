@@ -5,7 +5,7 @@
     "name": "FastAPI Auth JWT Model",
     "summary": """
         A prototype module for fastapi_auth_jwt.""",
-    "version": "16.0.0.0.1",
+    "version": "17.0.1.0.0",
     "license": "LGPL-3",
     "author": "kobros-tech, Odoo Community Association (OCA)",
     "maintainers": ["kobros-tech"],
@@ -13,8 +13,10 @@
     "depends": ["fastapi", "fastapi_auth_jwt"],
     "data": [
         "data/auth_jwt_validator.xml",
+        "data/fastapi_endpoint_demo.xml",
         "data/fastapi_endpoint.xml",
 
-        "views/fastapi_endpoint_demo.xml",
+        "views/fastapi_endpoint_view.xml",
     ],
+    'installable': True,
 }
