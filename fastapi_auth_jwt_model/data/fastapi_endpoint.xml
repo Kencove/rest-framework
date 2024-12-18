@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="fastapi.endpoint" id="fastapi_endpoint_auth_jwt_model">
+        <field name="name">Auth JWT Fastapi E-com Model Endpoint</field>
+        <field name="app">fastapi_auth_jwt_model</field>
+        <field name="root_path">/fastapi_auth_jwt_model</field>
+        <field name="user_id" ref="fastapi_auth_jwt_model.my_demo_app_user" />
+        <field
+            name="auth_jwt_validator_id"
+            ref="fastapi_auth_jwt_model.model_validator"
+        />
+    </record>
+</odoo>
