@@ -21,12 +21,14 @@ class Customer(StrictExtendableBaseModel):
     @classmethod
     def from_res_partner(cls, odoo_rec):
         env = odoo_rec.env
+
+        lang_id=env["res.lang"]._lang_get(odoo_rec.lang).id
         return cls.model_construct(
             email=odoo_rec.email or None,
             name=odoo_rec.name or None,
             phone=odoo_rec.phone or None,
             mobile=odoo_rec.mobile or None,
-            lang_id=env["res.lang"]._lang_get_id(odoo_rec.lang),
+            lang_id=env["res.lang"]._lang_get(odoo_rec.lang).id,
         )
 
 
