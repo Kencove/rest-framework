@@ -201,6 +201,8 @@ class AuthJwtPartner(BaseAuthJwt):
             partner_id = validator._get_and_check_partner_id(payload)
         except Unauthorized as e:
             raise HTTPException(status_code=HTTP_401_UNAUTHORIZED) from e
+        if not partner_id and self.allow_unauthenticated:
+            return env["res.partner"].with_user(env.ref("base.public_user")).browse()
         if not partner_id:
             _logger.info("Could not determine partner from JWT payload.")
             raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
